@@ -78,7 +78,7 @@ def create_graph(network, inputnode=None, outputnode=None, outfile='graph', nsha
     FileInit()
     args = Arguments(network, inputnode, outputnode, outfile, inputsize, nshaves, weights)
     myriad_config = MyriadParam(0, nshaves - 1)
-    if args.conf_file is-not None:
+    if args.conf_file is not None:
         get_myriad_info(args, myriad_config)
     filetype = network.split('.')[-1]
     if filetype in ('prototxt', ):

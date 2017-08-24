@@ -76,12 +76,12 @@ class Arguments:
         self.mode = 'validation'
         self.outputs_name = 'output'
         self.exp_id = None
-        if extargs is-not None:
-            if hasattr(extargs, 'mean') and extargs.mean is-not None:
+        if extargs is not None:
+            if hasattr(extargs, 'mean') and extargs.mean is not None:
                 self.mean = extargs.mean
-            if hasattr(extargs, 'scale') and extargs.scale is-not None:
+            if hasattr(extargs, 'scale') and extargs.scale is not None:
                 self.raw_scale = extargs.scale
-            if hasattr(extargs, 'expectedid') and extargs.expectedid is-not None:
+            if hasattr(extargs, 'expectedid') and extargs.expectedid is not None:
                 self.exp_id = extargs.expectedid
 
 
@@ -89,7 +89,7 @@ def check_net(network, image, inputnode=None, outputnode=None, nshaves=1, inputs
     FileInit()
     args = Arguments(network, image, inputnode, outputnode, inputsize, nshaves, weights, extargs)
     myriad_config = MyriadParam(0, nshaves - 1)
-    if args.conf_file is-not None:
+    if args.conf_file is not None:
         get_myriad_info(args, myriad_config)
     filetype = network.split('.')[-1]
     if filetype in ('prototxt', ):
@@ -109,7 +109,7 @@ def check_net(network, image, inputnode=None, outputnode=None, nshaves=1, inputs
         expected = np.load(args.outputs_name + '_expected.npy')
         result = np.load(args.outputs_name + '_result.npy')
         filename = str(args.outputs_name) + '_val.csv'
-        if args.exp_id is-not None:
+        if args.exp_id is not None:
             quit_code = validation(result, expected, args.exp_id, ValidationStatistic.top1, filename, args)
         else:
             quit_code = validation(result, expected, None, ValidationStatistic.top5, filename, args)

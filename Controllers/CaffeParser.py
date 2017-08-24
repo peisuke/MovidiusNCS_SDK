@@ -154,7 +154,7 @@ def get_caffe_output_channels(layer, prev_output_shape, top, network):
     if isReshape(layer.type):
         return layer.reshape_param.shape[0]
     if isPooling(layer.type) or isSoftMax(layer.type) or isLRN(layer.type) or isSigmoid(layer.type) or isTanH(layer.type) or isPower(layer.type):
-        if top is-not None and len(top) > 1:
+        if top is not None and len(top) > 1:
             sum_of_k_from_parents = 0
             for parent in top:
                 prev_node = network.search(parent)
@@ -321,7 +321,7 @@ def caffe_apply_minor_op(network, layer, top):
     global slice_tracker
     global concat_tracker
     if isReLU(layer.type) or isELU(layer.type):
-        if top is-not None and type(top[0]) != str:
+        if top is not None and type(top[0]) != str:
             top = top[0]
         for prevlayer in top:
             if isReLU(layer.type):
@@ -510,12 +510,12 @@ def parse_caffe(arguments, myriad_conf, debug=False, file_gen=False):
                     if node != 0 and node.op == StageType.convolution:
                         w, b = get_caffe_params(layer, net.params)
                         node.taps = (node.taps.T * w).T
-                        if node.bias is-not None:
-                            if b is-not None:
+                        if node.bias is not None:
+                            if b is not None:
                                 node.bias = node.bias * w + b
                             else:
                                 node.bias = node.bias * w
-                        elif b is-not None:
+                        elif b is not None:
                             node.addBias(np.array(b).astype(np.float16))
                         node.name = layer.name
                         node.changeName(node.name)
@@ -622,9 +622,9 @@ def parse_caffe(arguments, myriad_conf, debug=False, file_gen=False):
                                                 layername = layer.name
                                                 if ngroups > 1:
                                                     curslicing = []
-                                                    curslicing.append([top[0] if top is-not None else None, inshape[0] // ngroups * group, inshape[0] // ngroups * (group + 1)])
+                                                    curslicing.append([top[0] if top is not None else None, inshape[0] // ngroups * group, inshape[0] // ngroups * (group + 1)])
                                                     taps = taps[taps.shape[0] // ngroups * group:taps.shape[0] // ngroups * (group + 1)]
-                                                    if bias is-not None:
+                                                    if bias is not None:
                                                         bias = bias[bias.shape[0] // ngroups * group:bias.shape[0] // ngroups * (group + 1)]
                                                     if get_caffe_kernel_size(layer)[0] > 1:
                                                         if top is None:

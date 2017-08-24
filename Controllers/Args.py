@@ -103,35 +103,35 @@ def define_and_parse_args():
     fa = FathomArguments()
     fa.mode = parse_mode(args.mode)
     fa.outputs_location = path_arg(args.output_location)
-    fa.outputs_name = args.output_name if args.output_name is-not None else 'Fathom'
-    fa.number_of_shaves = int(args.num_shaves) if args.num_shaves is-not None else 1
-    fa.number_of_iterations = int(args.run_several) if args.run_several is-not None else 2
-    fa.upper_temperature_limit = int(args.tmp_upper_lim) if args.tmp_upper_lim is-not None else -1
-    fa.lower_temperature_limit = int(args.tmp_lower_lim) if args.tmp_lower_lim is-not None else -1
-    fa.backoff_time_normal = int(args.backoff_normal) if args.backoff_normal is-not None else -1
-    fa.backoff_time_high = int(args.backoff_high) if args.backoff_high is-not None else -1
-    fa.backoff_time_critical = int(args.backoff_crit) if args.backoff_crit is-not None else -1
-    fa.debug_readX = int(args.debug_readX) if args.debug_readX is-not None else 100
+    fa.outputs_name = args.output_name if args.output_name is not None else 'Fathom'
+    fa.number_of_shaves = int(args.num_shaves) if args.num_shaves is not None else 1
+    fa.number_of_iterations = int(args.run_several) if args.run_several is not None else 2
+    fa.upper_temperature_limit = int(args.tmp_upper_lim) if args.tmp_upper_lim is not None else -1
+    fa.lower_temperature_limit = int(args.tmp_lower_lim) if args.tmp_lower_lim is not None else -1
+    fa.backoff_time_normal = int(args.backoff_normal) if args.backoff_normal is not None else -1
+    fa.backoff_time_high = int(args.backoff_high) if args.backoff_high is not None else -1
+    fa.backoff_time_critical = int(args.backoff_crit) if args.backoff_crit is not None else -1
+    fa.debug_readX = int(args.debug_readX) if args.debug_readX is not None else 100
     fa.temperature_mode = 'Advanced' if hasattr(args, 'temperature_mode') and args.temperature_mode in (None,
                                                                                                         'adv',
                                                                                                         'advanced') else 'Simple'
-    fa.stress_usblink_write = int(args.stress_usblink_write) if args.stress_usblink_write is-not None else 1
-    fa.stress_usblink_read = int(args.stress_usblink_read) if args.stress_usblink_read is-not None else 1
-    fa.stress_full_run = int(args.stress_full_run) if args.stress_full_run is-not None else 1
-    fa.stress_boot_run = int(args.stress_boot_run) if args.stress_boot_run is-not None else 1
-    fa.stress_boot_init = int(args.stress_boot_init) if args.stress_boot_init is-not None else 1
+    fa.stress_usblink_write = int(args.stress_usblink_write) if args.stress_usblink_write is not None else 1
+    fa.stress_usblink_read = int(args.stress_usblink_read) if args.stress_usblink_read is not None else 1
+    fa.stress_full_run = int(args.stress_full_run) if args.stress_full_run is not None else 1
+    fa.stress_boot_run = int(args.stress_boot_run) if args.stress_boot_run is not None else 1
+    fa.stress_boot_init = int(args.stress_boot_init) if args.stress_boot_init is not None else 1
     fa.input_size = int(args.input_size) if args.input_size else None
     fa.timer = args.timer
     fa.disable_query = args.disable_query
     fa.network_level_throttling = args.set_network_level_throttling
     fa.no_throttling = args.set_no_throttling
     fa.explicit_concat = args.explicit_concat
-    fa.acm = int(args.ACM) if args.ACM is-not None else 0
+    fa.acm = int(args.ACM) if args.ACM is not None else 0
     fa.net_description = path_arg(args.network_description)
     fa.net_weights = path_arg(args.network_weights)
     fa.output_node_name = args.output_node_name
     fa.input_node_name = args.input_node_name
-    if fa.net_description is-not None:
+    if fa.net_description is not None:
         if args.parser is None:
             fa.parser = predict_parser(fa.net_description)
         else:
@@ -142,25 +142,25 @@ def define_and_parse_args():
         else:
             fa.parser = Parser.Debug
         fa.expected_index = args.output_expected_id
-        fa.class_test_threshold = float(args.class_test_threshold) if args.class_test_threshold is-not None else 0.2
+        fa.class_test_threshold = float(args.class_test_threshold) if args.class_test_threshold is not None else 0.2
         fa.validation_type = validation_as_enum(args.output_validation_type)
         fa.image = path_arg(args.image)
-        fa.raw_scale = float(args.raw_scale) if args.raw_scale is-not None else 1
+        fa.raw_scale = float(args.raw_scale) if args.raw_scale is not None else 1
         fa.mean = path_arg(args.mean)
         fa.channel_swap = args.channel_swap
-        fa.conf_file = args.conf_file if args.conf_file is-not None else 'optimisation.conf'
+        fa.conf_file = args.conf_file if args.conf_file is not None else 'optimisation.conf'
         fa.ensure_arg_compatibility()
     return fa
 
 
 def path_arg(path):
-    if path is-not None:
+    if path is not None:
         return os.path.normpath(path)
     return
 
 
 def path_check(path, error):
-    if path is-not None and os.path.isfile(path):
+    if path is not None and os.path.isfile(path):
         return True
     throw_error(error)
 # okay decompiling Args.pyc

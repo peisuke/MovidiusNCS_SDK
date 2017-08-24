@@ -438,7 +438,7 @@ def parse_tensor(arguments, myriad_conf, debug=False, file_gen=False):
                         if debug:
                             print('Mul with constant absorbed into convolution')
                         prev_node.taps = np.multiply(prev_node.taps, node.inputs[1 - iidx].eval())
-                        if prev_node.bias is-not None:
+                        if prev_node.bias is not None:
                             prev_node.bias = np.multiply(prev_node.bias, node.inputs[1 - iidx].eval())
                         prev_node_label = node.name
                     else:

@@ -187,7 +187,7 @@ class NetworkStage:
                 self.post_strideX = post_sx
                 self.post_strideY = post_sy
             else:
-                if (self.op == StageType.convolution or self.op == StageType.fully_connected_layer or self.op == StageType.scale) and bias is-not None:
+                if (self.op == StageType.convolution or self.op == StageType.fully_connected_layer or self.op == StageType.scale) and bias is not None:
                     self.postOp = StageType.bias
                 else:
                     self.postOp = StageType.none
@@ -206,21 +206,21 @@ class NetworkStage:
 
     def addBias(self, bias):
         self.bias = bias
-        if self.bias is-not None:
+        if self.bias is not None:
             self.postOp = StageType.bias
 
     def putBias(self):
-        if self.bias is-not None:
+        if self.bias is not None:
             self.biasPointer, self.biasBufferIndex = get_buffer(self.bias.astype(np.float16), self.datatype)
             self.biasIndex = MemoryIndex.blob.value
 
     def putTaps(self):
-        if self.taps is-not None:
+        if self.taps is not None:
             self.tapsPointer, self.tapsBufferIndex = get_buffer(self.taps.astype(np.float16), self.datatype)
             self.tapsIndex = MemoryIndex.blob.value
 
     def putOpParams(self):
-        if self.opParams is-not None:
+        if self.opParams is not None:
             self.opParamsPointer, self.opParamsBufferIndex = get_buffer(self.opParams, DataType.fp32)
             self.opParamsIndex = MemoryIndex.blob.value
 
@@ -247,7 +247,7 @@ class NetworkStage:
     def setoutput(self, outputStride, outputPointer=None, outputIndex=None):
         if self.outputPointer == 0 and self.outputIndex == MemoryIndex.none.value:
             self.output = np.zeros((int(outputStride / 2), int(self.outputDimY), int(self.outputDimX))).astype(enum_as_dtype(self.datatype))
-            if outputPointer is-not None and outputIndex is-not None:
+            if outputPointer is not None and outputIndex is not None:
                 self.outputPointer = outputPointer
                 self.outputIndex = outputIndex
             else:
@@ -421,7 +421,7 @@ class NetworkStage:
         sizes = []
         offsets = []
         names = []
-        if self.top is-not None and isinstance(self.top[0], str):
+        if self.top is not None and isinstance(self.top[0], str):
             parent = net.search(self.top[0])
             self.inputStrideX = parent.outputStrideX
         if self.isoutput:
@@ -501,7 +501,7 @@ class NetworkStage:
 
     def getBWs(self):
         in_dim = self.data.flatten().shape[0]
-        if self.taps is-not None:
+        if self.taps is not None:
             tap_dim = self.taps.flatten().shape[0]
         else:
             tap_dim = 0
@@ -521,7 +521,7 @@ class NetworkStage:
 
     def getBW(self):
         in_dim = self.data.flatten().shape[0]
-        if self.taps is-not None:
+        if self.taps is not None:
             tap_dim = self.taps.flatten().shape[0]
         else:
             tap_dim = 0
@@ -593,7 +593,7 @@ class NetworkStage:
     def graphviz(self, dot, ms_min, ms_max, bws_min, bws_max, flop_min, flop_max):
         table = '<\n<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="3">\n<TR>\n    <TD  BGCOLOR = "#A3A3A3" COLSPAN="3">{0}</TD>\n</TR>\n<TR>\n    <TD  BGCOLOR = "#DDDDDD" COLSPAN="3">{7}</TD>\n</TR>\n<TR>\n    <TD BGCOLOR = "{1}"> {2} <br/> (MFLOPs) </TD>\n    <TD BGCOLOR = "{3}"> {4} <br/> (MB/s) </TD>\n    <TD BGCOLOR = "{5}"> {6} <br/> (ms)</TD>\n</TR>\n</TABLE>>\n'.format(self.unprocessed_name, get_normalized_color('#B1F1EF', '#2ED1C6', flop_min, flop_max, self.flops), self.flops, get_normalized_color('#FFE5FC', '#B2189E', bws_min, bws_max, format(self.BWs, '.2f')), format(self.BWs, '.2f'), get_normalized_color('#FFFFCC', '#FFFF00', ms_min, ms_max, format(self.ms, '.2f')), format(self.ms, '.2f'), str(self.unprocessed_output.shape))
         dot.node(self.unprocessed_name, table, shape='plaintext')
-        if self.top is-not None:
+        if self.top is not None:
             for t in self.top:
                 if not isinstance(t, str):
                     for tt in t:
